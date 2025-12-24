@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3000/api';
+// Use relative API path so it works locally and on Render
+const API_URL = '/api';
 let adminToken = localStorage.getItem('adminToken');
 
 // Initialize admin login check on page load
