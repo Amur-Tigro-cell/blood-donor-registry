@@ -1,0 +1,4 @@
+node_modules/
+donors.db
+*.log
+.DS_Store
