@@ -5,11 +5,11 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Simple admin credentials (You can change these)
-const ADMIN_USERNAME = 'subro';
-const ADMIN_PASSWORD = 'subro2025';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'subro';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'subro2025';
 const ADMIN_SESSION = {}; // Store active sessions
 
 // Middleware
