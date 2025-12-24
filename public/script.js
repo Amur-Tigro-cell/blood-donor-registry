@@ -4,9 +4,8 @@ let adminToken = localStorage.getItem('adminToken');
 
 // Initialize admin login check on page load
 window.addEventListener('load', () => {
-  if (adminToken) {
-    document.getElementById('adminLoginModal').classList.remove('active');
-  }
+  // Ensure modal is hidden on first load; shown only when admin tab is clicked
+  document.getElementById('adminLoginModal').classList.remove('active');
 });
 
 // Admin Login
@@ -35,6 +34,8 @@ async function adminLogin() {
       localStorage.setItem('adminToken', adminToken);
       document.getElementById('adminLoginModal').classList.remove('active');
       alert('✓ Login successful!');
+      // After login, take user to the admin panel
+      showTab('admin');
     } else {
       showAdminError(data.error || 'Login failed');
     }
@@ -66,6 +67,8 @@ function adminLogout() {
   adminToken = null;
   localStorage.removeItem('adminToken');
   document.getElementById('adminLoginModal').classList.add('active');
+  // Return to register tab after logout
+  showTab('register');
   alert('✓ Logged out successfully');
 }
 
@@ -75,7 +78,8 @@ function showTab(tabName) {
   if (tabName === 'admin') {
     if (!adminToken) {
       event.preventDefault();
-      alert('Please login as admin first');
+      // Show login modal instead of blocking the page
+      document.getElementById('adminLoginModal').classList.add('active');
       return;
     }
     loadAdminDonors();
@@ -93,7 +97,12 @@ function showTab(tabName) {
   document.getElementById(tabName).classList.add('active');
 
   // Add active class to clicked button
-  event.target.classList.add('active');
+  if (event && event.target) {
+    event.target.classList.add('active');
+  } else {
+    const btn = document.querySelector(`.tab-btn[onclick*="${tabName}"]`);
+    if (btn) btn.classList.add('active');
+  }
 }
 
 // Register form submission
