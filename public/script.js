@@ -55,6 +55,17 @@ function showAdminError(message) {
   }, 5000);
 }
 
+// Close admin modal and return to register tab
+function closeAdminModal() {
+  document.getElementById('adminLoginModal').classList.remove('active');
+  document.getElementById('adminUsername').value = '';
+  document.getElementById('adminPassword').value = '';
+  const errorEl = document.getElementById('adminLoginError');
+  errorEl.style.display = 'none';
+  // Return to register tab
+  showTab('register');
+}
+
 // Admin Logout
 function adminLogout() {
   fetch(`${API_URL}/admin/logout`, {
